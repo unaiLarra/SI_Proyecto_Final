@@ -14,6 +14,11 @@ config/name="Anti-Spoof-Demo"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+
 [dotnet]
 
 project/assembly_name="Anti-Spoof-Demo"
