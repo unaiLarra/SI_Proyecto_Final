@@ -1,9 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://bqikrr2q8w177"]
+[gd_scene load_steps=12 format=3 uid="uid://bqikrr2q8w177"]
 
 [ext_resource type="StyleBox" uid="uid://bs73r08d2nnm7" path="res://Resources/Themes/panel.tres" id="1_bo1nx"]
 [ext_resource type="FontFile" uid="uid://vcp3nuyq014r" path="res://Assets/Fonts/Archivo/static/Archivo-Bold.ttf" id="1_jjgbg"]
 [ext_resource type="Script" uid="uid://1sy4ltl27iak" path="res://Scripts/main.gd" id="1_jjvhh"]
 [ext_resource type="Texture2D" uid="uid://b7epkfbu60ruc" path="res://icon.svg" id="3_8gbba"]
+[ext_resource type="StyleBox" uid="uid://cnwkf6klwlt6a" path="res://Resources/Themes/button_theme_hover.tres" id="4_21xkr"]
+[ext_resource type="Shader" uid="uid://b2lkgl5dv1bs7" path="res://Scenes/main.gdshader" id="4_kry3j"]
+[ext_resource type="StyleBox" uid="uid://b7f767x7eub8q" path="res://Resources/Themes/button_hover.tres" id="5_6bp64"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jjgbg"]
 bg_color = Color(0.303233, 0.303233, 0.303233, 1)
@@ -11,6 +14,36 @@ corner_radius_top_left = 9
 corner_radius_top_right = 9
 corner_radius_bottom_right = 9
 corner_radius_bottom_left = 9
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_21xkr"]
+shader = ExtResource("4_kry3j")
+shader_parameter/overlay = true
+shader_parameter/scanlines_opacity = 0.4
+shader_parameter/scanlines_width = 0.25
+shader_parameter/grille_opacity = 0.3
+shader_parameter/resolution = Vector2(200, 200)
+shader_parameter/pixelate = true
+shader_parameter/roll = true
+shader_parameter/roll_speed = 8.0
+shader_parameter/roll_size = 15.0
+shader_parameter/roll_variation = 1.8
+shader_parameter/distort_intensity = 0.05
+shader_parameter/noise_opacity = 0.4
+shader_parameter/noise_speed = 5.0
+shader_parameter/static_noise_intensity = 0.06
+shader_parameter/aberration = 0.03
+shader_parameter/brightness = 1.4
+shader_parameter/discolor = true
+shader_parameter/warp_amount = 1.0
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/vignette_opacity = 0.5
+
+[sub_resource type="Gradient" id="Gradient_kry3j"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_21xkr"]
+gradient = SubResource("Gradient_kry3j")
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -54,7 +87,7 @@ layout_mode = 2
 size_flags_horizontal = 8
 
 [node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer/MarginContainer"]
-custom_minimum_size = Vector2(300, 0)
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 theme_override_styles/panel = ExtResource("1_bo1nx")
 
@@ -72,6 +105,7 @@ theme_override_constants/margin_bottom = 10
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 17
 
 [node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
@@ -94,9 +128,309 @@ grow_vertical = 2
 
 [node name="Label" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("1_jjgbg")
-theme_override_font_sizes/font_size = 23
+theme_override_font_sizes/font_size = 25
 text = "Edit Image"
+
+[node name="VScrollBar" type="ScrollContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 20
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_jjgbg")
+theme_override_font_sizes/font_size = 21
+text = "Scanlines Opacity"
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_jjgbg")
+theme_override_font_sizes/font_size = 21
+text = "Scanlines Width"
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+
+[node name="MarginContainer3" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer3"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer3/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_jjgbg")
+theme_override_font_sizes/font_size = 21
+text = "Grille Opacity"
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer3/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+
+[node name="MarginContainer4" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer4"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer4/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_jjgbg")
+theme_override_font_sizes/font_size = 21
+text = "Roll Speed"
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer4/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+
+[node name="MarginContainer5" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer5"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer5/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_jjgbg")
+theme_override_font_sizes/font_size = 21
+text = "Roll Size"
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer5/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+
+[node name="MarginContainer6" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer6"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer6/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_jjgbg")
+theme_override_font_sizes/font_size = 21
+text = "Roll Variation"
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer6/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+
+[node name="MarginContainer7" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer7"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer7/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_jjgbg")
+theme_override_font_sizes/font_size = 21
+text = "Distort Intensity"
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer7/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+
+[node name="MarginContainer8" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer8"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer8/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_jjgbg")
+theme_override_font_sizes/font_size = 21
+text = "Noise Opacity"
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer8/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+
+[node name="MarginContainer9" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer9"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer9/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_jjgbg")
+theme_override_font_sizes/font_size = 21
+text = "Noise Speed"
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer9/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+
+[node name="MarginContainer10" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer10"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer10/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_jjgbg")
+theme_override_font_sizes/font_size = 21
+text = "Noise Intensity"
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer10/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+
+[node name="MarginContainer11" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer11"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer11/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_jjgbg")
+theme_override_font_sizes/font_size = 21
+text = "Aberration"
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer11/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+
+[node name="MarginContainer12" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer12"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer12/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_jjgbg")
+theme_override_font_sizes/font_size = 21
+text = "Brightness"
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer12/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+
+[node name="MarginContainer13" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer13"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer13/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_jjgbg")
+theme_override_font_sizes/font_size = 21
+text = "Warp Amount"
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer13/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+
+[node name="MarginContainer14" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer14"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer14/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_jjgbg")
+theme_override_font_sizes/font_size = 21
+text = "Vignette Intensity"
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer14/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+
+[node name="MarginContainer15" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer15"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer15/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_jjgbg")
+theme_override_font_sizes/font_size = 21
+text = "Vignette opacity"
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer15/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+
+[node name="Button" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_jjgbg")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = ExtResource("4_21xkr")
+theme_override_styles/disabled_mirrored = ExtResource("4_21xkr")
+theme_override_styles/disabled = ExtResource("4_21xkr")
+theme_override_styles/hover_pressed_mirrored = ExtResource("4_21xkr")
+theme_override_styles/hover_pressed = ExtResource("4_21xkr")
+theme_override_styles/hover_mirrored = ExtResource("4_21xkr")
+theme_override_styles/hover = ExtResource("5_6bp64")
+theme_override_styles/pressed_mirrored = ExtResource("4_21xkr")
+theme_override_styles/pressed = ExtResource("4_21xkr")
+theme_override_styles/normal_mirrored = ExtResource("4_21xkr")
+theme_override_styles/normal = ExtResource("4_21xkr")
+text = "Check Spoofing"
 
 [node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
@@ -109,25 +443,45 @@ theme_override_constants/separation = 15
 [node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer"]
 custom_minimum_size = Vector2(0, 450)
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_styles/panel = ExtResource("1_bo1nx")
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/Panel"]
-custom_minimum_size = Vector2(300, 300)
+[node name="FaceImage" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/Panel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 400)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -150.0
+offset_top = -150.0
+offset_right = 150.0
+offset_bottom = 150.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_8gbba")
+expand_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/Panel"]
+material = SubResource("ShaderMaterial_21xkr")
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -150.0
+offset_right = 150.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_21xkr")
 
 [node name="Panel2" type="Panel" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
-size_flags_vertical = 3
 theme_override_styles/panel = ExtResource("1_bo1nx")
