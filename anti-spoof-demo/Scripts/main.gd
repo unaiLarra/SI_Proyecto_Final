@@ -1,30 +1,35 @@
 extends Control
 
+@onready var face_image: TextureRect = %FaceImage
+@onready var crt_overlay: TextureRect = %CRTOverlay
+
 var url = 'http://127.0.0.1:5000/'
 
 func _ready() -> void:
 	set_random_image()
 
 func _process(delta: float) -> void:
-	%FaceImage.material.set_shader_parameter("scanlines_opacity", %ScanlinesOpacity.value)
-	%FaceImage.material.set_shader_parameter("scanlines_width", %ScanlinesOpacity.value)
-	%FaceImage.material.set_shader_parameter("grille_opacity", %ScanlinesOpacity.value)
-	%FaceImage.material.set_shader_parameter("roll_speed", %ScanlinesOpacity.value)
-	%FaceImage.material.set_shader_parameter("roll_size", %ScanlinesOpacity.value)
-	%FaceImage.material.set_shader_parameter("roll_variation", %ScanlinesOpacity.value)
-	%FaceImage.material.set_shader_parameter("distort_intensity", %ScanlinesOpacity.value)
-	%FaceImage.material.set_shader_parameter("noise_opacity", %ScanlinesOpacity.value)
-	%FaceImage.material.set_shader_parameter("noise_speed", %ScanlinesOpacity.value)
-	%FaceImage.material.set_shader_parameter("static_noise_intensity", %ScanlinesOpacity.value)
-	%FaceImage.material.set_shader_parameter("aberration", %ScanlinesOpacity.value)
-	%FaceImage.material.set_shader_parameter("brightness", %ScanlinesOpacity.value)
-	%FaceImage.material.set_shader_parameter("warp_amount", %ScanlinesOpacity.value)
-	%FaceImage.material.set_shader_parameter("vignette_intensity", %ScanlinesOpacity.value)
-	%FaceImage.material.set_shader_parameter("vignette_opacity", %ScanlinesOpacity.value)
+	crt_overlay.material.set_shader_parameter("scanlines_opacity", %ScanlinesOpacity.value)
+	crt_overlay.material.set_shader_parameter("scanlines_width", %ScanlinesWidth.value)
+	crt_overlay.material.set_shader_parameter("grille_opacity", %GrilleOpacity.value)
+	crt_overlay.material.set_shader_parameter("roll_speed", %RollSpeed.value)
+	crt_overlay.material.set_shader_parameter("roll_size", %RollSize.value)
+	crt_overlay.material.set_shader_parameter("roll_variation", %RollVariation.value)
+	crt_overlay.material.set_shader_parameter("distort_intensity", %DistortIntensity.value)
+	crt_overlay.material.set_shader_parameter("noise_opacity", %NoiseOpacity.value)
+	crt_overlay.material.set_shader_parameter("noise_speed", %NoiseSpeed.value)
+	crt_overlay.material.set_shader_parameter("static_noise_intensity", %NoiseIntensity.value)
+	crt_overlay.material.set_shader_parameter("aberration", %Aberration.value)
+	crt_overlay.material.set_shader_parameter("brightness", %Brightness.value)
+	crt_overlay.material.set_shader_parameter("warp_amount", %WarpAmount.value)
+	crt_overlay.material.set_shader_parameter("vignette_intensity", %VignetteIntensity.value)
+	crt_overlay.material.set_shader_parameter("vignette_opacity", %VignetteOpacity.value)
+	crt_overlay.material.set_shader_parameter("vignette_opacity", %VignetteOpacity.value)
+	crt_overlay.material.set_shader_parameter("resolution", Vector2(%Resolution.value, %Resolution.value))
 
 
-func send_http_deepface_request(image: Image, function_name: String) -> void:
-	print('Sending request with image: ',image,' , function_name: ',function_name)
+func send_http_deepface_request(image: Image) -> void:
+	print('Sending request')
 	var base_64_data = Marshalls.raw_to_base64(image.save_png_to_buffer())
 	var body = JSON.new().stringify({
 		"image": str('data:image/png;base64,',base_64_data)
@@ -43,6 +48,24 @@ func set_random_image() -> void:
 			if !dir.current_is_dir() and file_name.ends_with(".png"):
 				paths.append(dir_path+"/"+file_name)
 			file_name = dir.get_next()
-		%FaceImage.texture = load(paths[randi_range(0,len(paths))])
+		face_image.texture = load(paths[randi_range(0,len(paths)-1)])
 	else:
 		print("An error occurred when trying to access the path.")
+
+
+func _on_check_spoof_button_button_up() -> void:
+	%FaceImage.texture.get_image().save_png("res://Assets/SavedImages/face.png")
+	%CRTOverlay.get_texture().get_image().save_png("res://Assets/SavedImages/overlay.png")
+	send_http_deepface_request(%FaceImage.texture.get_image())
+
+
+func _on_http_request_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
+	if response_code != 200:
+		printerr('HTTP Error ',response_code)
+		return
+	# Get the JSON response and parse it
+	var json = JSON.new()
+	json.parse(body.get_string_from_utf8())
+	var response = json.get_data()
+
+	print(response)
