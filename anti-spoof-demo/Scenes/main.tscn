@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bqikrr2q8w177"]
+[gd_scene load_steps=14 format=3 uid="uid://bqikrr2q8w177"]
 
 [ext_resource type="StyleBox" uid="uid://bs73r08d2nnm7" path="res://Resources/Themes/panel.tres" id="1_bo1nx"]
 [ext_resource type="FontFile" uid="uid://vcp3nuyq014r" path="res://Assets/Fonts/Archivo/static/Archivo-Bold.ttf" id="1_jjgbg"]
@@ -22,13 +22,13 @@ corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_21xkr"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ynf5e"]
 shader = ExtResource("4_kry3j")
 shader_parameter/overlay = true
 shader_parameter/scanlines_opacity = 0.4
 shader_parameter/scanlines_width = 0.25
 shader_parameter/grille_opacity = 0.3
-shader_parameter/resolution = Vector2(200, 200)
+shader_parameter/resolution = Vector2(640, 480)
 shader_parameter/pixelate = true
 shader_parameter/roll = true
 shader_parameter/roll_speed = 8.0
@@ -46,11 +46,37 @@ shader_parameter/clip_warp = false
 shader_parameter/vignette_intensity = 0.4
 shader_parameter/vignette_opacity = 0.5
 
-[sub_resource type="Gradient" id="Gradient_kry3j"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_21xkr"]
+shader = ExtResource("4_kry3j")
+shader_parameter/overlay = true
+shader_parameter/scanlines_opacity = 0.4
+shader_parameter/scanlines_width = 0.25
+shader_parameter/grille_opacity = 0.3
+shader_parameter/resolution = Vector2(200, 200)
+shader_parameter/pixelate = true
+shader_parameter/roll = true
+shader_parameter/roll_speed = 8.0
+shader_parameter/roll_size = 15.0
+shader_parameter/roll_variation = 1.261
+shader_parameter/distort_intensity = 0.05
+shader_parameter/noise_opacity = 0.4
+shader_parameter/noise_speed = 5.0
+shader_parameter/static_noise_intensity = 0.06
+shader_parameter/aberration = 0.03
+shader_parameter/brightness = 1.4
+shader_parameter/discolor = true
+shader_parameter/warp_amount = 1.0
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/vignette_opacity = 0.5
+
+[sub_resource type="Gradient" id="Gradient_6bp64"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_21xkr"]
-gradient = SubResource("Gradient_kry3j")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_344ge"]
+gradient = SubResource("Gradient_6bp64")
+width = 256
+height = 256
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -186,7 +212,8 @@ text = "Scanlines Width"
 [node name="ScanlinesWidth" type="HSlider" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/ScanlinesWidth/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-max_value = 1.0
+max_value = 0.5
+step = 0.01
 
 [node name="GrilleOpacity" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
 layout_mode = 2
@@ -206,6 +233,7 @@ text = "Grille Opacity"
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 1.0
+step = 0.01
 
 [node name="MarginContainer4" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
 layout_mode = 2
@@ -224,7 +252,7 @@ text = "Roll Speed"
 [node name="RollSpeed" type="HSlider" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer4/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-max_value = 1.0
+step = 0.5
 
 [node name="MarginContainer5" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
 layout_mode = 2
@@ -243,7 +271,7 @@ text = "Roll Size"
 [node name="RollSize" type="HSlider" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer5/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-max_value = 1.0
+step = 0.5
 
 [node name="MarginContainer6" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
 layout_mode = 2
@@ -262,7 +290,8 @@ text = "Roll Variation"
 [node name="RollVariation" type="HSlider" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer6/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-max_value = 1.0
+max_value = 5.0
+step = 0.05
 
 [node name="MarginContainer7" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
 layout_mode = 2
@@ -281,7 +310,8 @@ text = "Distort Intensity"
 [node name="DistortIntensity" type="HSlider" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer7/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-max_value = 1.0
+max_value = 0.2
+step = 0.01
 
 [node name="MarginContainer8" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
 layout_mode = 2
@@ -301,6 +331,7 @@ text = "Noise Opacity"
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 1.0
+step = 0.01
 
 [node name="MarginContainer9" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
 layout_mode = 2
@@ -319,7 +350,7 @@ text = "Noise Speed"
 [node name="NoiseSpeed" type="HSlider" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer9/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-max_value = 1.0
+step = 0.5
 
 [node name="MarginContainer10" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
 layout_mode = 2
@@ -339,6 +370,7 @@ text = "Noise Intensity"
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 1.0
+step = 0.01
 
 [node name="MarginContainer11" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
 layout_mode = 2
@@ -357,7 +389,10 @@ text = "Aberration"
 [node name="Aberration" type="HSlider" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer11/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+min_value = -1.0
 max_value = 1.0
+step = 0.01
+value = 0.03
 
 [node name="MarginContainer12" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
 layout_mode = 2
@@ -376,7 +411,9 @@ text = "Brightness"
 [node name="Brightness" type="HSlider" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer12/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-max_value = 1.0
+max_value = 10.0
+step = 0.01
+value = 1.4
 
 [node name="MarginContainer13" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
 layout_mode = 2
@@ -395,7 +432,8 @@ text = "Warp Amount"
 [node name="WarpAmount" type="HSlider" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer13/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-max_value = 1.0
+max_value = 5.0
+step = 0.01
 
 [node name="MarginContainer14" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
 layout_mode = 2
@@ -414,7 +452,8 @@ text = "Vignette Intensity"
 [node name="VignetteIntensity" type="HSlider" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer14/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-max_value = 1.0
+max_value = 10.0
+step = 0.01
 
 [node name="MarginContainer15" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
 layout_mode = 2
@@ -434,8 +473,29 @@ text = "Vignette opacity"
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 1.0
+step = 0.01
 
-[node name="Button" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer"]
+[node name="MarginContainer16" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer16"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer16/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_jjgbg")
+theme_override_font_sizes/font_size = 21
+text = "Vignette opacity"
+
+[node name="Resolution" type="HSlider" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer/MarginContainer16/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 400.0
+value = 150.0
+
+[node name="CheckSpoofButton" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -486,8 +546,8 @@ grow_vertical = 2
 texture = ExtResource("3_8gbba")
 expand_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/Panel"]
-material = SubResource("ShaderMaterial_21xkr")
+[node name="SubViewportContainer" type="SubViewportContainer" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/Panel"]
+material = SubResource("ShaderMaterial_ynf5e")
 custom_minimum_size = Vector2(400, 400)
 layout_mode = 1
 anchors_preset = 8
@@ -495,15 +555,42 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -150.0
-offset_right = 150.0
-offset_bottom = 150.0
+offset_left = -200.0
+offset_top = -200.0
+offset_right = 200.0
+offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("GradientTexture1D_21xkr")
+stretch = true
+
+[node name="OverlayViewport" type="SubViewport" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/Panel/SubViewportContainer"]
+unique_name_in_owner = true
+handle_input_locally = false
+size = Vector2i(400, 400)
+render_target_update_mode = 4
+
+[node name="CRTOverlay" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/Panel/SubViewportContainer/OverlayViewport"]
+unique_name_in_owner = true
+visible = false
+material = SubResource("ShaderMaterial_21xkr")
+custom_minimum_size = Vector2(400, 400)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 767.5
+offset_top = 32.5
+offset_right = 1167.5
+offset_bottom = 432.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_344ge")
 
 [node name="Panel2" type="Panel" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer"]
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 theme_override_styles/panel = ExtResource("1_bo1nx")
+
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]
+[connection signal="button_up" from="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/CheckSpoofButton" to="." method="_on_check_spoof_button_button_up"]

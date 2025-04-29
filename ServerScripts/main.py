@@ -50,7 +50,9 @@ def predict():
         file = data['image']
         img = base64_to_image(file)
         img = create_image_from_bytes(img)
+        print(img)
         prediction = get_prediction(img)
+        
 
         return jsonify(prediction), 200
 
