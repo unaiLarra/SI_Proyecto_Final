@@ -30,6 +30,8 @@ func update_shader() -> void:
 	crt_overlay.material.set_shader_parameter("vignette_opacity", %VignetteOpacity.value)
 	crt_overlay.material.set_shader_parameter("vignette_opacity", %VignetteOpacity.value)
 	crt_overlay.material.set_shader_parameter("resolution", Vector2(%Resolution.value, %Resolution.value))
+	crt_overlay.material.set_shader_parameter("tint_value", %Tint.value)
+	crt_overlay.material.set_shader_parameter("temp_value", %Temp.value)
 
 
 func send_http_deepface_request(image: Image) -> void:
