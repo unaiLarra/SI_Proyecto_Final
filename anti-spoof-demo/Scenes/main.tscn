@@ -1,14 +1,19 @@
-[gd_scene load_steps=15 format=3 uid="uid://bqikrr2q8w177"]
+[gd_scene load_steps=18 format=3 uid="uid://bqikrr2q8w177"]
 
 [ext_resource type="StyleBox" uid="uid://bs73r08d2nnm7" path="res://Resources/Themes/panel.tres" id="1_bo1nx"]
 [ext_resource type="FontFile" uid="uid://vcp3nuyq014r" path="res://Assets/Fonts/Archivo/static/Archivo-Bold.ttf" id="1_jjgbg"]
 [ext_resource type="Script" uid="uid://1sy4ltl27iak" path="res://Scripts/main.gd" id="1_jjvhh"]
 [ext_resource type="Shader" uid="uid://dqjjknlggkv6t" path="res://Resources/Shaders/scrolling_tiles.gdshader" id="2_344ge"]
+[ext_resource type="Gradient" uid="uid://diyl7dwhydck4" path="res://Resources/Themes/progress_bar_gradient.tres" id="2_d1ilt"]
 [ext_resource type="Texture2D" uid="uid://cuvba07tb1qjm" path="res://Assets/New Project(2).png" id="3_ynf5e"]
 [ext_resource type="StyleBox" uid="uid://cnwkf6klwlt6a" path="res://Resources/Themes/button_theme_hover.tres" id="4_21xkr"]
 [ext_resource type="Shader" uid="uid://b2lkgl5dv1bs7" path="res://Resources/Shaders/main.gdshader" id="4_kry3j"]
 [ext_resource type="StyleBox" uid="uid://b7f767x7eub8q" path="res://Resources/Themes/button_hover.tres" id="5_6bp64"]
 [ext_resource type="Texture2D" uid="uid://dtgwhkvj46ics" path="res://Assets/Sample Images/real_217.png" id="7_344ge"]
+[ext_resource type="StyleBox" uid="uid://dr0tgve3p52p1" path="res://Resources/Themes/progress_bar_theme.tres" id="10_hptm8"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_6iyac"]
+gradient = ExtResource("2_d1ilt")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hptm8"]
 shader = ExtResource("2_344ge")
@@ -75,6 +80,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_jjvhh")
+progress_bar_gradient = SubResource("GradientTexture1D_6iyac")
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 unique_name_in_owner = true
@@ -641,6 +647,36 @@ render_target_update_mode = 4
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 theme_override_styles/panel = ExtResource("1_bo1nx")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/Panel2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/Panel2/MarginContainer"]
+layout_mode = 2
+
+[node name="ResultLabel" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/Panel2/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_jjgbg")
+theme_override_font_sizes/font_size = 26
+
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/Panel2/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/fill = ExtResource("10_hptm8")
+max_value = 1.0
+step = 0.001
+show_percentage = false
 
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]
 [connection signal="button_up" from="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer/CheckSpoofButton" to="." method="_on_check_spoof_button_button_up"]
