@@ -1,14 +1,22 @@
 extends Control
 
+@export var progress_bar_gradient: GradientTexture1D
+
 @onready var crt_overlay: SubViewportContainer = %CRTOverlay
 @onready var processed_face_viewport: SubViewport = %ProcessedFaceViewport
+@onready var progress_bar: ProgressBar = %ProgressBar
+@onready var result_label: Label = %ResultLabel
 
+var progress_bar_theme: StyleBoxFlat = load("res://Resources/Themes/progress_bar_theme.tres")
+var progress_bar_tween: Tween
+var result_text_tween: Tween
 var url = 'http://127.0.0.1:5000/'
 
 func _ready() -> void:
 	set_random_image()
 
 func _process(delta: float) -> void:
+	progress_bar_theme.bg_color = progress_bar_gradient.gradient.sample(progress_bar.value)
 	if Engine.get_process_frames() % 10 == 0:
 		update_shader()
 
@@ -73,7 +81,7 @@ func _on_http_request_request_completed(result: int, response_code: int, headers
 	var json = JSON.new()
 	json.parse(body.get_string_from_utf8())
 	var response = json.get_data()
-
+	progress_bar_tween_to_value(response['value'], response['class'])
 	print(response)
 
 
@@ -89,3 +97,18 @@ func get_all_children(node) -> Array:
 		else:
 			nodes.append(N)
 	return nodes
+
+func progress_bar_tween_to_value(value: float, predicted_class: String) -> void:
+	if progress_bar_tween:
+		progress_bar_tween.kill()
+	progress_bar_tween = create_tween()
+
+	if result_text_tween:
+		result_text_tween.kill()
+	result_text_tween = create_tween()
+
+	result_label.visible_ratio = 0.0
+	result_label.text = predicted_class+'!'
+	result_text_tween.tween_property(result_label, "visible_ratio", 1.0, 0.4).set_ease(Tween.EASE_OUT)
+
+	progress_bar_tween.tween_property(progress_bar, "value", value, 1.2).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
