@@ -45,6 +45,8 @@ uniform bool clip_warp = false;
 
 uniform float vignette_intensity = 0.4; // Size of the vignette, how far towards the middle it should go.
 uniform float vignette_opacity : hint_range(0.0, 1.0) = 0.5;
+uniform float tint_value : hint_range(-1.0, 1.0) = 0;
+uniform float temp_value : hint_range(-1.0, 1.0) = 0;
 uniform sampler2D face_image;
 
 // Used by the noise functin to generate a pseudo random value between 0.0 and 1.0
@@ -92,6 +94,28 @@ float vignette(vec2 uv){
 	uv *= 1.0 - uv.xy;
 	float vignette = uv.x * uv.y * 15.0;
 	return pow(vignette, vignette_intensity * vignette_opacity);
+}
+
+vec3 tint(vec3 color){
+	vec3 tint_offset = vec3(0.5,1.0,0.5) * tint_value;
+	float r = -0.3;
+	float g = 0.3;
+	float b = -0.3;
+	r = clamp(color.r + r * tint_value, 0.0, 1.0);
+	g = clamp(color.g + g * tint_value, 0.0, 1.0);
+	b = clamp(color.b + b * tint_value, 0.0, 1.0);
+	return vec3(r,g,b);
+}
+
+vec3 temp(vec3 color){
+	vec3 tint_offset = vec3(0.5,1.0,0.5) * tint_value;
+	float r = 0.3;
+	float g = 0.3;
+	float b = -0.3;
+	r = clamp(color.r + r * temp_value, 0.0, 1.0);
+	g = clamp(color.g + g * temp_value, 0.0, 1.0);
+	b = clamp(color.b + b * temp_value, 0.0, 1.0);
+	return vec3(r,g,b);
 }
 
 void fragment()
@@ -163,11 +187,15 @@ void fragment()
 		
 	}
 	
+	text.rgb = vec3(r,g,b);
+	text.rgb = tint(text.rgb);
+	text.rgb = temp(text.rgb);
+	
 	// Apply the grille to the texture's color channels and apply Brightness. Since the grille and the scanlines (below) make the image very dark you
 	// can compensate by increasing the brightness.
-	text.r = clamp(r * brightness, 0.0, 1.0);
-	text.g = clamp(g * brightness, 0.0, 1.0);
-	text.b = clamp(b * brightness, 0.0, 1.0);
+	text.r = clamp(text.r * brightness, 0.0, 1.0);
+	text.g = clamp(text.g * brightness, 0.0, 1.0);
+	text.b = clamp(text.b * brightness, 0.0, 1.0);
 	
 	// Scanlines are the horizontal lines that make up the image on a CRT monitor. 
 	// Here we are actual setting the black gap between each line, which I guess is not the right definition of the word, but you get the idea  
