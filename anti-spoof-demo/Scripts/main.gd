@@ -79,3 +79,13 @@ func _on_http_request_request_completed(result: int, response_code: int, headers
 
 func _on_new_face_button_up() -> void:
 	set_random_image()
+
+func get_all_children(node) -> Array:
+	var nodes: Array = []
+	for N: Node in node.get_children():
+		if N.get_child_count() > 0:
+			nodes.append(N)
+			nodes.append_array(get_all_children(N))
+		else:
+			nodes.append(N)
+	return nodes
