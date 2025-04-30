@@ -1,12 +1,23 @@
-[gd_scene load_steps=12 format=3 uid="uid://bqikrr2q8w177"]
+[gd_scene load_steps=15 format=3 uid="uid://bqikrr2q8w177"]
 
 [ext_resource type="StyleBox" uid="uid://bs73r08d2nnm7" path="res://Resources/Themes/panel.tres" id="1_bo1nx"]
 [ext_resource type="FontFile" uid="uid://vcp3nuyq014r" path="res://Assets/Fonts/Archivo/static/Archivo-Bold.ttf" id="1_jjgbg"]
 [ext_resource type="Script" uid="uid://1sy4ltl27iak" path="res://Scripts/main.gd" id="1_jjvhh"]
+[ext_resource type="Shader" uid="uid://dqjjknlggkv6t" path="res://Resources/Shaders/scrolling_tiles.gdshader" id="2_344ge"]
+[ext_resource type="Texture2D" uid="uid://cuvba07tb1qjm" path="res://Assets/New Project(2).png" id="3_ynf5e"]
 [ext_resource type="StyleBox" uid="uid://cnwkf6klwlt6a" path="res://Resources/Themes/button_theme_hover.tres" id="4_21xkr"]
 [ext_resource type="Shader" uid="uid://b2lkgl5dv1bs7" path="res://Resources/Shaders/main.gdshader" id="4_kry3j"]
 [ext_resource type="StyleBox" uid="uid://b7f767x7eub8q" path="res://Resources/Themes/button_hover.tres" id="5_6bp64"]
 [ext_resource type="Texture2D" uid="uid://dtgwhkvj46ics" path="res://Assets/Sample Images/real_217.png" id="7_344ge"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hptm8"]
+shader = ExtResource("2_344ge")
+shader_parameter/pattern_sampler = ExtResource("3_ynf5e")
+shader_parameter/bg_color = Color(1, 1, 1, 1)
+shader_parameter/pattern_color = Color(0, 0, 0, 1)
+shader_parameter/scale = 9.0
+shader_parameter/ratio = 0.56
+shader_parameter/direction = Vector2(0.15, 0.1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jjgbg"]
 bg_color = Color(0.303233, 0.303233, 0.303233, 1)
@@ -23,7 +34,7 @@ corner_radius_bottom_right = 9
 corner_radius_bottom_left = 9
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6bp64"]
-bg_color = Color(0.11, 0.11, 0.11, 1)
+bg_color = Color(0.11, 0.11, 0.11, 0.878431)
 corner_radius_top_left = 12
 corner_radius_top_right = 12
 corner_radius_bottom_right = 12
@@ -69,6 +80,7 @@ script = ExtResource("1_jjvhh")
 unique_name_in_owner = true
 
 [node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_hptm8")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
