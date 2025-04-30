@@ -1,7 +1,7 @@
 extends Control
 
-@onready var face_image: TextureRect = %FaceImage
-@onready var crt_overlay: TextureRect = %CRTOverlay
+@onready var crt_overlay: SubViewportContainer = %CRTOverlay
+@onready var processed_face_viewport: SubViewport = %ProcessedFaceViewport
 
 var url = 'http://127.0.0.1:5000/'
 
@@ -9,6 +9,10 @@ func _ready() -> void:
 	set_random_image()
 
 func _process(delta: float) -> void:
+	if Engine.get_process_frames() % 10 == 0:
+		update_shader()
+
+func update_shader() -> void:
 	crt_overlay.material.set_shader_parameter("scanlines_opacity", %ScanlinesOpacity.value)
 	crt_overlay.material.set_shader_parameter("scanlines_width", %ScanlinesWidth.value)
 	crt_overlay.material.set_shader_parameter("grille_opacity", %GrilleOpacity.value)
@@ -48,15 +52,15 @@ func set_random_image() -> void:
 			if !dir.current_is_dir() and file_name.ends_with(".png"):
 				paths.append(dir_path+"/"+file_name)
 			file_name = dir.get_next()
-		face_image.texture = load(paths[randi_range(0,len(paths)-1)])
+		crt_overlay.material.set_shader_parameter("face_image", load(paths[randi_range(0,len(paths)-1)]))
+		#face_material.albedo_texture = load(paths[randi_range(0,len(paths)-1)])
 	else:
 		print("An error occurred when trying to access the path.")
 
 
 func _on_check_spoof_button_button_up() -> void:
-	%FaceImage.texture.get_image().save_png("res://Assets/SavedImages/face.png")
-	%CRTOverlay.get_texture().get_image().save_png("res://Assets/SavedImages/overlay.png")
-	send_http_deepface_request(%FaceImage.texture.get_image())
+	#processed_face_viewport.get_texture().get_image().save_png("res://Assets/SavedImages/overlay.png")
+	send_http_deepface_request(processed_face_viewport.get_texture().get_image())
 
 
 func _on_http_request_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
@@ -69,3 +73,7 @@ func _on_http_request_request_completed(result: int, response_code: int, headers
 	var response = json.get_data()
 
 	print(response)
+
+
+func _on_new_face_button_up() -> void:
+	set_random_image()
