@@ -13,15 +13,9 @@ Install [Godot](https://godotengine.org/), import the **project.godot** file ins
 
 ## Tools used
 [PyTorch](https://pytorch.org/)
-
 [Flask](https://flask.palletsprojects.com/en/stable/)
-
 [Godot](https://godotengine.org/)
-
 [Bruno](https://www.usebruno.com/) *Strong recomendation over postman!*
-
 [Numpy](https://numpy.org/)
-
 [Large Crowdcollected Face Anti-Spoofing Dataset](https://www.kaggle.com/datasets/faber24/lcc-fasd)
-
 [Photopea](https://www.photopea.com/)
