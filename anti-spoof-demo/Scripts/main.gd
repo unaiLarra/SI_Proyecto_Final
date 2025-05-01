@@ -52,6 +52,8 @@ func send_http_deepface_request(image: Image) -> void:
 	%HTTPRequest.request(url+"predict", headers, HTTPClient.METHOD_POST, body)
 
 func set_random_image() -> void:
+	result_label.text = ''
+	progress_bar.value = 0
 	var paths: Array[String] = []
 	var dir_path := "res://Assets/Sample Images/"
 	var dir = DirAccess.open(dir_path)
