@@ -11,13 +11,17 @@ config_version=5
 [application]
 
 config/name="Anti-Spoof-Demo"
+run/main_scene="uid://bqikrr2q8w177"
 config/features=PackedStringArray("4.4", "Forward Plus")
+run/max_fps=60
+run/low_processor_mode=true
 config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=1920
-window/size/viewport_height=1080
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/resizable=false
 
 [dotnet]
 

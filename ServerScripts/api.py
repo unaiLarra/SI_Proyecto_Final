@@ -7,7 +7,7 @@ from torch import nn
 import numpy as np
 from PIL import Image
 
-# flask --app  SI_Proyecto_Final/ServerScripts/main.py run ----- Script to run the api
+# flask --app  SI_Proyecto_Final/ServerScripts/api.py run ----- Script to run the api
 
 app = Flask(__name__)
 
