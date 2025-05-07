@@ -55,19 +55,16 @@ func set_random_image() -> void:
 	result_label.text = ''
 	progress_bar.value = 0
 	var paths: Array[String] = []
-	var dir_path := "res://Assets/Sample Images/"
+	var dir_path := "res://Assets/SampleImages/"
 	var dir = DirAccess.open(dir_path)
-	if dir:
-		dir.list_dir_begin()
-		var file_name = dir.get_next()
-		while file_name != "":
-			if !dir.current_is_dir() and file_name.ends_with(".png"):
-				paths.append(dir_path+"/"+file_name)
-			file_name = dir.get_next()
-		crt_overlay.material.set_shader_parameter("face_image", load(paths[randi_range(0,len(paths)-1)]))
-		#face_material.albedo_texture = load(paths[randi_range(0,len(paths)-1)])
-	else:
-		print("An error occurred when trying to access the path.")
+	var resources = ResourceLoader.list_directory(dir_path)
+	for res in resources:
+		if res.ends_with(".png"):
+			paths.append(dir_path+"/"+res)
+	print('Image paths: \n',paths)
+	crt_overlay.material.set_shader_parameter("face_image", load(paths[randi_range(0,len(paths)-1)]))
+	#face_material.albedo_texture = load(paths[randi_range(0,len(paths)-1)])
+
 
 
 func _on_check_spoof_button_button_up() -> void:
@@ -101,6 +98,8 @@ func get_all_children(node) -> Array:
 	return nodes
 
 func progress_bar_tween_to_value(value: float, predicted_class: String) -> void:
+	if value < 0.02: 
+		value = 0.02
 	if progress_bar_tween:
 		progress_bar_tween.kill()
 	progress_bar_tween = create_tween()

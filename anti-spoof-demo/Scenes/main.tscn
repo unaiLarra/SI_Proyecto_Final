@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bqikrr2q8w177"]
+[gd_scene load_steps=20 format=3 uid="uid://bqikrr2q8w177"]
 
 [ext_resource type="StyleBox" uid="uid://bs73r08d2nnm7" path="res://Resources/Themes/panel.tres" id="1_bo1nx"]
 [ext_resource type="FontFile" uid="uid://vcp3nuyq014r" path="res://Assets/Fonts/Archivo/static/Archivo-Bold.ttf" id="1_jjgbg"]
@@ -9,7 +9,8 @@
 [ext_resource type="StyleBox" uid="uid://cnwkf6klwlt6a" path="res://Resources/Themes/button_theme_hover.tres" id="4_21xkr"]
 [ext_resource type="Shader" uid="uid://b2lkgl5dv1bs7" path="res://Resources/Shaders/main.gdshader" id="4_kry3j"]
 [ext_resource type="StyleBox" uid="uid://b7f767x7eub8q" path="res://Resources/Themes/button_hover.tres" id="5_6bp64"]
-[ext_resource type="Texture2D" uid="uid://dtgwhkvj46ics" path="res://Assets/Sample Images/real_217.png" id="7_344ge"]
+[ext_resource type="Texture2D" uid="uid://dtgwhkvj46ics" path="res://Assets/SampleImages/real_217.png" id="7_344ge"]
+[ext_resource type="StyleBox" uid="uid://dbo6np7f6vp3p" path="res://Resources/Themes/green_button_unpressed.tres" id="9_6iyac"]
 [ext_resource type="StyleBox" uid="uid://dr0tgve3p52p1" path="res://Resources/Themes/progress_bar_theme.tres" id="10_hptm8"]
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_6iyac"]
@@ -31,8 +32,15 @@ corner_radius_top_right = 9
 corner_radius_bottom_right = 9
 corner_radius_bottom_left = 9
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_344ge"]
-bg_color = Color(0.434327, 0.82, 0.1394, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6iyac"]
+bg_color = Color(0.250133, 0.67, 0.134, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fdnlq"]
+bg_color = Color(0.25098, 0.670588, 0.133333, 1)
 corner_radius_top_left = 9
 corner_radius_top_right = 9
 corner_radius_bottom_right = 9
@@ -416,7 +424,7 @@ unique_name_in_owner = true
 layout_mode = 2
 max_value = 10.0
 step = 0.01
-value = 1.4
+value = 1.0
 
 [node name="MarginContainer13" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
 layout_mode = 2
@@ -573,17 +581,17 @@ size_flags_horizontal = 3
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("1_jjgbg")
 theme_override_font_sizes/font_size = 25
-theme_override_styles/focus = ExtResource("4_21xkr")
-theme_override_styles/disabled_mirrored = ExtResource("4_21xkr")
-theme_override_styles/disabled = ExtResource("4_21xkr")
-theme_override_styles/hover_pressed_mirrored = ExtResource("4_21xkr")
-theme_override_styles/hover_pressed = ExtResource("4_21xkr")
-theme_override_styles/hover_mirrored = ExtResource("4_21xkr")
-theme_override_styles/hover = ExtResource("5_6bp64")
-theme_override_styles/pressed_mirrored = ExtResource("4_21xkr")
-theme_override_styles/pressed = ExtResource("4_21xkr")
-theme_override_styles/normal_mirrored = ExtResource("4_21xkr")
-theme_override_styles/normal = SubResource("StyleBoxFlat_344ge")
+theme_override_styles/focus = ExtResource("9_6iyac")
+theme_override_styles/disabled_mirrored = ExtResource("9_6iyac")
+theme_override_styles/disabled = ExtResource("9_6iyac")
+theme_override_styles/hover_pressed_mirrored = ExtResource("9_6iyac")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_6iyac")
+theme_override_styles/hover_mirrored = ExtResource("9_6iyac")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fdnlq")
+theme_override_styles/pressed_mirrored = ExtResource("9_6iyac")
+theme_override_styles/pressed = ExtResource("9_6iyac")
+theme_override_styles/normal_mirrored = ExtResource("9_6iyac")
+theme_override_styles/normal = ExtResource("9_6iyac")
 text = "New face"
 
 [node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
