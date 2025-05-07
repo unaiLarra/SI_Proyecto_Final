@@ -34,6 +34,9 @@ class NotsoDeepCNN(nn.Module):
 ```
 ![image](https://github.com/user-attachments/assets/c8291f3c-2e47-44c3-9d1c-b4592ba3eae0)
 
+## Bug Fixes
+https://forum.godotengine.org/t/export-build-not-loading-resources-from-directory/94911/5
+
 ## Tools used
 [PyTorch](https://pytorch.org/),
 [Flask](https://flask.palletsprojects.com/en/stable/),
