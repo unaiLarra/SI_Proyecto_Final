@@ -403,7 +403,6 @@ layout_mode = 2
 min_value = -1.0
 max_value = 1.0
 step = 0.01
-value = 0.03
 
 [node name="MarginContainer12" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
 layout_mode = 2
@@ -506,7 +505,7 @@ text = "Resolution"
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 400.0
-value = 150.0
+value = 400.0
 
 [node name="MarginContainer17" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/Panel/MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
 layout_mode = 2
