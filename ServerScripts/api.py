@@ -11,15 +11,15 @@ from PIL import Image
 
 app = Flask(__name__)
 
-class NotsoDeepCNN(nn.Module):
+class DeeperCNN(nn.Module):
     def __init__(self):
-        super(NotsoDeepCNN, self).__init__()
+        super(DeeperCNN, self).__init__()
         self.conv1 = nn.Conv2d(3, 16, 3, padding=1)
         self.conv2 = nn.Conv2d(16, 32, 3, padding=1)
         self.pool = nn.MaxPool2d(2, 2)
-        self.fc1 = nn.Linear(32 * 56 * 56, 300)
-        self.fc2 = nn.Linear(300, 40)
-        self.fc3 = nn.Linear(40, 1)
+        self.fc1 = nn.Linear(32 * 56 * 56, 512)
+        self.fc2 = nn.Linear(512, 64)
+        self.fc3 = nn.Linear(64, 1)
         self.relu = nn.ReLU()
         self.sigmoid = nn.Sigmoid()
 
@@ -32,8 +32,8 @@ class NotsoDeepCNN(nn.Module):
         x = self.sigmoid(self.fc3(x))
         return x
 
-model = NotsoDeepCNN()
-model.load_state_dict(torch.load("v3.pth", weights_only=True))
+model = DeeperCNN()
+model.load_state_dict(torch.load("v2.pth", weights_only=True))
 model.eval()
 
 classes = {0:'real', 1:'spoof'}
